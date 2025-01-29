@@ -5,6 +5,7 @@ import {
   Inter_400Regular,
   Inter_700Bold
 } from '@expo-google-fonts/inter'
+import { theme } from './src/theme';
 
 export default function App() {
   const [ fontsLoaded ] = useFonts({
@@ -26,7 +27,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.base.gray600,
     alignItems: 'center',
     justifyContent: 'center',
   },

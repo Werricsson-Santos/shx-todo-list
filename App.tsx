@@ -1,5 +1,5 @@
-import React from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React from 'react-native';
+import { StatusBar } from 'react-native';
 import { 
   useFonts,
   Inter_400Regular,
@@ -16,6 +16,11 @@ export default function App() {
   return (
     <>
       {fontsLoaded ? <HomeScreen /> : <Loading />}
+      <StatusBar 
+        barStyle="light-content" 
+        backgroundColor="transparent" 
+        translucent 
+      />
     </>
   );
 }

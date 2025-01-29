@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
         backgroundColor: theme.colors.base.gray500,
         borderRadius: 5,
         padding: 16,
+        color: theme.colors.base.gray100,
         marginRight: 4,
         fontSize: theme.font_size.md,
         borderColor: theme.colors.base.gray700,

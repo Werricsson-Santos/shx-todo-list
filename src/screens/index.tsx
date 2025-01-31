@@ -13,13 +13,26 @@ export function HomeScreen() {
     const [newTask, setNewTask] = useState('')
     const newTaskInputRef = useRef<TextInput>(null)
     const STORAGE_KEY = "@tasks"
+    const API_URL = "https://jsonplaceholder.typicode.com/todos";
 
     useEffect(() => {
         const loadTasks = async () => {
             try {
                 const storedTasks = await AsyncStorage.getItem(STORAGE_KEY)
-                if (storedTasks) {
+                if (storedTasks && JSON.parse(storedTasks).length > 0) {
                     setTasks(JSON.parse(storedTasks))
+                } else {
+                    const response = await fetch(API_URL)
+                    const data = await response.json()
+
+                    const formatedTasks: TaskDTO[] = data.slice(0, 10).map((task: any) => ({
+                        id: String(task.id),
+                        title: task.title,
+                        isCompleted: task.completed
+                    }))
+
+                    setTasks(formatedTasks)
+                    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(formatedTasks))
                 }
             } catch (error) {
                 console.error("Erro ao carregar as tarefas:", error)

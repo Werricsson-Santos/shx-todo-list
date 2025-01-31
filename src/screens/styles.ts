@@ -16,6 +16,11 @@ export const styles = StyleSheet.create({
         fontSize: theme.font_size.md,
         fontFamily: theme.font_family.bold
     },
+    tasksToDo:{
+        color: theme.colors.brand.blue_dark,
+        fontSize: theme.font_size.md,
+        fontFamily: theme.font_family.bold
+    },
     tasksDone: {
         color: theme.colors.brand.purple,
         fontSize: theme.font_size.md,
@@ -29,7 +34,12 @@ export const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: 4
+    },
+    activeRow: {
+        borderBottomWidth: 1,
+        borderColor: theme.colors.brand.purple
     },
     counterContainer: {
         backgroundColor: theme.colors.base.gray400,

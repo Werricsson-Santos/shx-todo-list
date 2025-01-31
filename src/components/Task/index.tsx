@@ -27,8 +27,9 @@ export function Task({ id, title, isCompleted, onTaskDone, onTaskDeleted }: Task
             />
         </TouchableOpacity>
 
+        
         <View style={styles.textContainer}>
-            <Text style={isCompleted ? styles.textDone : styles.textCreated}>{title}</Text>
+            <Text style={isCompleted ? styles.textDone : styles.textCreated} onPress={() => onTaskDone(id)}>{title}</Text>
         </View>
 
         <TouchableOpacity onPress={() => onTaskDeleted(id)}>

@@ -2,22 +2,55 @@ import { View, Text, FlatList, Alert, TextInput } from "react-native";
 import { styles } from "./styles";
 import { Header } from "../components/Header";
 import { Task } from "../components/Task";
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { TaskDTO } from "../dtos/taskDTO";
 import { Empty } from "../components/Empty";
 import { uuid } from "../components/utils/uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function HomeScreen() {
     const [tasks, setTasks] = useState<TaskDTO[]>([])
     const [newTask, setNewTask] = useState('')
     const newTaskInputRef = useRef<TextInput>(null)
+    const STORAGE_KEY = "@tasks"
+
+    useEffect(() => {
+        const loadTasks = async () => {
+            try {
+                const storedTasks = await AsyncStorage.getItem(STORAGE_KEY)
+                if (storedTasks) {
+                    setTasks(JSON.parse(storedTasks))
+                }
+            } catch (error) {
+                console.error("Erro ao carregar as tarefas:", error)
+            }
+        }
+
+        loadTasks()
+    }, [])
+
+    useEffect(() => {
+        const saveTasks = async () => {
+            try {
+                await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
+            } catch (error) {
+                console.error("Erro ao salvar task", error)
+            }
+        }
+
+        if(tasks.length > 0) {
+            saveTasks()
+        }
+
+    }, [tasks])
 
     function handleTaskAdd() {
         if(newTask !== '' && newTask.length > 5) {
-            setTasks((tasks) => [
+            const updatedTasks = [
                 ...tasks,
                 { id: uuid(), isCompleted: false, title: newTask.trim() },
-            ])
+            ]
+            setTasks(updatedTasks)
             setNewTask('')
 
             newTaskInputRef.current?.blur()
@@ -38,7 +71,11 @@ export function HomeScreen() {
             {
                 text: 'Sim',
                 style: 'default',
-                onPress: () => setTasks((tasks) => tasks.filter((task) => task.id !== id))
+                onPress: () => {
+                    const updatedTasks = tasks.filter((task) => task.id !== id)
+                    setTasks(updatedTasks)
+                    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTasks))
+                }
             },
             {
                 text: 'Não',

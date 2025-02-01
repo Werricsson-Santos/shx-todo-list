@@ -34,7 +34,7 @@ npm install -g expo-cli
 
 ### Clonando o repositório
 ```sh
-git clone https://github.com/seu-usuario/shx-todo-list.git
+git clone https://github.com/Werricsson-Santos/shx-todo-list.git
 cd shx-todo-list
 ```
 

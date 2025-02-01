@@ -5,7 +5,7 @@
     import { useState, useEffect, useRef } from "react";
     import { TaskDTO } from "../dtos/taskDTO";
     import { Empty } from "../components/Empty";
-    import { uuid } from "../components/utils/uuid";
+    import { uuid } from "../utils/uuid";
     import AsyncStorage from "@react-native-async-storage/async-storage";
 
     export function HomeScreen() {
